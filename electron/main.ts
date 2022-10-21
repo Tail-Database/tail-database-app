@@ -7,6 +7,8 @@ import installExtension, { REACT_DEVELOPER_TOOLS } from "electron-devtools-insta
 import { DataLayer } from '../src/datalayer/rpc/data_layer';
 import { Tail } from '../src/models/tail/model';
 
+process.on('uncaughtException', (e) => console.error(e));
+
 // Temporary hacking this in here - will change later
 const id = '073edb36a4a982c3d00999b1d925d304e7867afa68eb535e3071ee2f682700ea';
 
