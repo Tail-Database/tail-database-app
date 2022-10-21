@@ -1,7 +1,24 @@
-import { app, BrowserWindow } from 'electron';
+import { app, ipcMain, BrowserWindow } from 'electron';
+import { readFileSync } from 'fs';
 import * as path from 'path';
 import * as isDev from 'electron-is-dev';
 import installExtension, { REACT_DEVELOPER_TOOLS } from "electron-devtools-installer";
+import { DataLayer } from '../src/datalayer/rpc/data_layer';
+import { Tail } from '../src/models/tail/model';
+
+// Temporary hacking this in here - will change later
+const id = '073edb36a4a982c3d00999b1d925d304e7867afa68eb535e3071ee2f682700ea';
+
+const CONFIG_PATH = '/Users/freddiecoleman/.chia/mainnet/config/ssl/full_node';
+
+const dl = new DataLayer({
+    id,
+    cert: readFileSync(`${CONFIG_PATH}/private_full_node.crt`),
+    key: readFileSync(`${CONFIG_PATH}/private_full_node.key`),
+    rejectUnauthorized: false
+})
+
+const tailStore = new Tail(dl);
 
 let win: BrowserWindow | null = null;
 
@@ -10,7 +27,9 @@ function createWindow() {
         width: 800,
         height: 600,
         webPreferences: {
-            nodeIntegration: true
+            nodeIntegration: true,
+            preload: path.join(__dirname, 'preload.js'),
+            contextIsolation: true, // Isolating context so our app is not exposed to random javascript executions making it safer
         }
     })
 
@@ -32,6 +51,8 @@ function createWindow() {
             hardResetMethod: 'exit'
         });
     }
+
+    ipcMain.handle('get-tails', () => tailStore.all())
 
     // DevTools
     installExtension(REACT_DEVELOPER_TOOLS)
