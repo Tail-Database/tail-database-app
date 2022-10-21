@@ -62,7 +62,6 @@ export class DataLayer {
             key: options.key,
             rejectUnauthorized: options.rejectUnauthorized,
         });
-        console.log(this.agent)
     }
 
     public get_keys_values(): Promise<KeysValuesResponse> {
