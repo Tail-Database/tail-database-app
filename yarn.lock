@@ -2100,6 +2100,13 @@
   "resolved" "https://registry.npmjs.org/@types/ms/-/ms-0.7.31.tgz"
   "version" "0.7.31"
 
+"@types/msgpack-lite@^0.1.8":
+  "integrity" "sha512-3qIhe8MH1kGcXnB5YuY6W0lLb9LEcWrhanDYfw0zKdXAv+CNKG0+6To1X8dqVyrxKb3FeAgJBJS5RdFwBQteVg=="
+  "resolved" "https://registry.npmjs.org/@types/msgpack-lite/-/msgpack-lite-0.1.8.tgz"
+  "version" "0.1.8"
+  dependencies:
+    "@types/node" "*"
+
 "@types/node@*", "@types/node@^16.11.26", "@types/node@^16.11.68":
   "integrity" "sha512-JkRpuVz3xCNCWaeQ5EHLR/6woMbHZz/jZ7Kmc63AkU+1HxnoUugzSWMck7dsR4DvNYX8jp9wTi9K7WvnxOIQZQ=="
   "resolved" "https://registry.npmjs.org/@types/node/-/node-16.11.68.tgz"
@@ -4840,6 +4847,11 @@
   "resolved" "https://registry.npmjs.org/etag/-/etag-1.8.1.tgz"
   "version" "1.8.1"
 
+"event-lite@^0.1.1":
+  "integrity" "sha512-HnSYx1BsJ87/p6swwzv+2v6B4X+uxUteoDfRxsAb1S1BePzQqOLevVmkdA15GHJVd9A9Ok6wygUR18Hu0YeV9g=="
+  "resolved" "https://registry.npmjs.org/event-lite/-/event-lite-0.1.2.tgz"
+  "version" "0.1.2"
+
 "eventemitter3@^4.0.0":
   "integrity" "sha512-8guHBZCwKnFhYdHr2ysuRWErTwhoN2X8XELRlrRwpmfeY2jjuUN4taQMsULKUVo1K4DvZl+0pgfyoysHxvmvEw=="
   "resolved" "https://registry.npmjs.org/eventemitter3/-/eventemitter3-4.0.7.tgz"
@@ -5681,7 +5693,7 @@
   dependencies:
     "harmony-reflect" "^1.4.6"
 
-"ieee754@^1.1.13":
+"ieee754@^1.1.13", "ieee754@^1.1.8":
   "integrity" "sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA=="
   "resolved" "https://registry.npmjs.org/ieee754/-/ieee754-1.2.1.tgz"
   "version" "1.2.1"
@@ -5749,6 +5761,11 @@
   "integrity" "sha512-JV/yugV2uzW5iMRSiZAyDtQd+nxtUnjeLt0acNdw98kKLrvuRVyB80tsREOE7yvGVgalhZ6RNXCmEHkUKBKxew=="
   "resolved" "https://registry.npmjs.org/ini/-/ini-1.3.8.tgz"
   "version" "1.3.8"
+
+"int64-buffer@^0.1.9":
+  "integrity" "sha512-v7cSY1J8ydZ0GyjUHqF+1bshJ6cnEVLo9EnjB8p+4HDRPZc9N5jjmvUV7NvEsqQOKyH0pmIBFWXVQbiS0+OBbA=="
+  "resolved" "https://registry.npmjs.org/int64-buffer/-/int64-buffer-0.1.10.tgz"
+  "version" "0.1.10"
 
 "internal-slot@^1.0.3":
   "integrity" "sha512-O0DB1JC/sPyZl7cIo78n5dR7eUSwwpYPiXRhTzNxZVAMUuB8vlnRFyLxdrVToks6XPLVnFfbzaVd5WLjhgg+vA=="
@@ -5949,7 +5966,7 @@
   dependencies:
     "is-docker" "^2.0.0"
 
-"isarray@~1.0.0":
+"isarray@^1.0.0", "isarray@~1.0.0":
   "integrity" "sha512-VLghIWNM6ELQzo7zwmcg0NmTVyWKYjvIeM83yjp0wRDTmUnrM678fQbcKBo6n2CJEF0szoG//ytg+TKla89ALQ=="
   "resolved" "https://registry.npmjs.org/isarray/-/isarray-1.0.0.tgz"
   "version" "1.0.0"
@@ -7048,6 +7065,16 @@
   "integrity" "sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA=="
   "resolved" "https://registry.npmjs.org/ms/-/ms-2.1.3.tgz"
   "version" "2.1.3"
+
+"msgpack-lite@^0.1.26":
+  "integrity" "sha512-SZ2IxeqZ1oRFGo0xFGbvBJWMp3yLIY9rlIJyxy8CGrwZn1f0ZK4r6jV/AM1r0FZMDUkWkglOk/eeKIL9g77Nxw=="
+  "resolved" "https://registry.npmjs.org/msgpack-lite/-/msgpack-lite-0.1.26.tgz"
+  "version" "0.1.26"
+  dependencies:
+    "event-lite" "^0.1.1"
+    "ieee754" "^1.1.8"
+    "int64-buffer" "^0.1.9"
+    "isarray" "^1.0.0"
 
 "multicast-dns@^7.2.5":
   "integrity" "sha512-2eznPJP8z2BFLX50tf0LuODrpINqP1RVIm/CObbTcBRITQgmC/TjcREF1NeTBzIcR5XO/ukWo+YHOjBbFwIupg=="
