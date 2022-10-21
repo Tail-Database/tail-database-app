@@ -1,15 +1,38 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import {
+  createBrowserRouter,
+  Link,
+  RouterProvider,
+} from "react-router-dom";
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
+import logo from './assets/logo-light.png';
+import HomePage from './pages/HomePage';
+import Tail from './pages/Tail';
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <HomePage />,
+  },
+  {
+    path: "/tail/:hash",
+    element: <Tail />,
+  },
+]);
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <div className="App">
+      <header className="App-header">
+        <a href='/'><img src={logo} className="App-logo" alt="logo" /></a>
+      </header>
+      <RouterProvider router={router} />
+    </div>
   </React.StrictMode>
 );
 

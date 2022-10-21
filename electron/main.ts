@@ -40,10 +40,10 @@ function createWindow() {
     })
 
     if (isDev) {
-        win.loadURL('http://localhost:3000/index.html');
+        win.loadURL('http://localhost:3000/');
     } else {
         // 'build/index.html'
-        win.loadURL(`file://${__dirname}/../index.html`);
+        win.loadURL(`file://${__dirname}/../`);
     }
 
     win.on('closed', () => win = null);
