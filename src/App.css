@@ -28,6 +28,19 @@
   color: #282c34;
 }
 
+.menu-container {
+  width: 100%;
+  position: absolute;
+  right: 1em;
+}
+
+.menu-button {
+  float: right;
+  background-color: #8364e2;
+  color: #fff;
+  font-weight: bold;
+}
+
 .tail-info {
   min-height: 40vh;
   display: flex;

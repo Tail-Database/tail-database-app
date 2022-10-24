@@ -30,6 +30,9 @@ root.render(
   <React.StrictMode>
     <div className="App">
       <header className="App-header">
+        <div className="menu-container">
+          <input type="button" value="Add CAT TAIL" className="menu-button" />
+        </div>
         <a href='/'><img src={logo} className="App-logo" alt="logo" /></a>
       </header>
       <RouterProvider router={router} />
