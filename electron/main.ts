@@ -60,7 +60,9 @@ function createWindow() {
         });
     }
 
-    ipcMain.handle('get-tails', () => tailStore.all())
+
+    ipcMain.handle('get-tails', () => tailStore.all());
+    ipcMain.handle('get-tail', (_, hash) => tailStore.get(hash));
 
     // DevTools
     installExtension(REACT_DEVELOPER_TOOLS)
@@ -68,7 +70,7 @@ function createWindow() {
         .catch((err) => console.log('An error occurred: ', err));
 
     if (isDev) {
-        win.webContents.openDevTools();
+        // win.webContents.openDevTools();
     }
 }
 
