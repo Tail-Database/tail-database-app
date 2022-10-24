@@ -8,10 +8,16 @@ import {
 import { Link } from "react-router-dom";
 import '../App.css';
 import Layout from '../Layout';
+import { TailRecord } from '../models/tail/record';
+import { InsertResponse } from '../datalayer/rpc/data_layer';
 
 declare global {
   interface Window {
-    taildatabase?: any
+    taildatabase: {
+      addTail: (tailRecord: TailRecord) => Promise<InsertResponse>;
+      getTails: () => Promise<TailRecord[]>;
+      getTail: (hash: string) => Promise<TailRecord>;
+    }
   }
 }
 

@@ -2,8 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import {
   createBrowserRouter,
-  Link,
-  useNavigate,
   RouterProvider,
 } from "react-router-dom";
 import './index.css';
@@ -11,7 +9,6 @@ import reportWebVitals from './reportWebVitals';
 import HomePage from './pages/HomePage';
 import Tail from './pages/Tail';
 import AddTail from './pages/AddTail';
-import Header from './Header';
 
 const router = createBrowserRouter([
   {

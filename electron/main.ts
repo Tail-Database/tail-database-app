@@ -6,6 +6,7 @@ import * as isDev from 'electron-is-dev';
 import installExtension, { REACT_DEVELOPER_TOOLS } from "electron-devtools-installer";
 import { DataLayer } from '../src/datalayer/rpc/data_layer';
 import { Tail } from '../src/models/tail/model';
+import { TailRecord } from '../src/models/tail/record';
 
 process.on('uncaughtException', (e) => console.error(e));
 
@@ -63,6 +64,7 @@ function createWindow() {
 
     ipcMain.handle('get-tails', () => tailStore.all());
     ipcMain.handle('get-tail', (_, hash) => tailStore.get(hash));
+    ipcMain.handle('add-tail', (_, tailRecord: TailRecord) => tailStore.insert(tailRecord));
 
     // DevTools
     installExtension(REACT_DEVELOPER_TOOLS)

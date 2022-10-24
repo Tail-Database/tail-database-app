@@ -10,7 +10,7 @@ function Tail() {
     const [tail, setTail] = useState({ hash: '', name: '', code: ''});
 
     useEffect(() => {
-        window.taildatabase.getTail(hash)
+        window.taildatabase.getTail(hash || '')
             .then((res: any) => setTail(res))
             .catch(console.error)
     }, []);
