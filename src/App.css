@@ -29,12 +29,14 @@
 }
 
 .menu-container {
+  pointer-events: none; 
   width: 100%;
   position: absolute;
   right: 1em;
 }
 
 .menu-button {
+  pointer-events: all; 
   float: right;
   background-color: #8364e2;
   color: #fff;

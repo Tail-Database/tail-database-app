@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from "react-router-dom";
 import '../App.css';
+import Layout from '../Layout';
 
 
 
@@ -16,13 +17,13 @@ function Tail() {
 
 
     return (
-        <>
+        <Layout>
             <div className="tail-info">
                 <h1>{tail.name}</h1>
                 <p>Hash: {tail.hash}</p>
                 <p>Code: {tail.code}</p>
             </div>
-        </>
+        </Layout>
     );
 }
 

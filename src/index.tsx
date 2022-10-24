@@ -3,13 +3,15 @@ import ReactDOM from 'react-dom/client';
 import {
   createBrowserRouter,
   Link,
+  useNavigate,
   RouterProvider,
 } from "react-router-dom";
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import logo from './assets/logo-light.png';
 import HomePage from './pages/HomePage';
 import Tail from './pages/Tail';
+import AddTail from './pages/AddTail';
+import Header from './Header';
 
 const router = createBrowserRouter([
   {
@@ -20,6 +22,10 @@ const router = createBrowserRouter([
     path: "/tail/:hash",
     element: <Tail />,
   },
+  {
+    path: "/add/tail",
+    element: <AddTail />,
+  },
 ]);
 
 const root = ReactDOM.createRoot(
@@ -29,12 +35,6 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <div className="App">
-      <header className="App-header">
-        <div className="menu-container">
-          <input type="button" value="Add CAT TAIL" className="menu-button" />
-        </div>
-        <a href='/'><img src={logo} className="App-logo" alt="logo" /></a>
-      </header>
       <RouterProvider router={router} />
     </div>
   </React.StrictMode>
