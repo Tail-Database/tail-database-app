@@ -7,7 +7,7 @@ import Layout from '../Layout';
 
 function Tail() {
     const { hash } = useParams();
-    const [tail, setTail] = useState({ hash: '', name: '', code: ''});
+    const [tail, setTail] = useState({ hash: '', name: '', code: '', category: '', description: '' });
 
     useEffect(() => {
         window.taildatabase.getTail(hash || '')
@@ -22,6 +22,8 @@ function Tail() {
                 <h1>{tail.name}</h1>
                 <p>Hash: {tail.hash}</p>
                 <p>Code: {tail.code}</p>
+                <p>Category: {tail.category}</p>
+                <p>Description: {tail.description}</p>
             </div>
         </Layout>
     );
