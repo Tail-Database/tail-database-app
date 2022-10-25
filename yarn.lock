@@ -3094,6 +3094,18 @@
   "resolved" "https://registry.npmjs.org/binary-extensions/-/binary-extensions-2.2.0.tgz"
   "version" "2.2.0"
 
+"binascii@0.0.2":
+  "integrity" "sha512-rA2CrUl1+6yKrn+XgLs8Hdy18OER1UW146nM+ixzhQXDY+Bd3ySkyIJGwF2a4I45JwbvF1mDL/nWkqBwpOcdBA=="
+  "resolved" "https://registry.npmjs.org/binascii/-/binascii-0.0.2.tgz"
+  "version" "0.0.2"
+
+"bls-signatures@^1.0.14":
+  "integrity" "sha512-Efw50HSo8taGOGRExBdGn3EVxclcF62TfHJDI1zd3kaIQe0W+j86+hrZJSyGoofv9LtwYas8wp3sflBdcGgStA=="
+  "resolved" "https://registry.npmjs.org/bls-signatures/-/bls-signatures-1.0.16.tgz"
+  "version" "1.0.16"
+  dependencies:
+    "binascii" "0.0.2"
+
 "bluebird-lst@^1.0.9":
   "integrity" "sha512-7B1Rtx82hjnSD4PGLAjVWeYH3tHAcVUmChh85a3lltKQm6FresXh9ErQo6oAv6CqxttczC3/kEg8SY5NluPuUw=="
   "resolved" "https://registry.npmjs.org/bluebird-lst/-/bluebird-lst-1.0.9.tgz"
@@ -3495,6 +3507,14 @@
   "version" "1.0.3"
   dependencies:
     "mimic-response" "^1.0.0"
+
+"clvm@^2.0.0":
+  "integrity" "sha512-jUHC01ZZYHaKDGUSkpsA76lzVSdVvac4kF/YL58PiKIRP4N9UfWFiFlrebrwLEgKmW7+hA556YjNq5M8GKas4Q=="
+  "resolved" "https://registry.npmjs.org/clvm/-/clvm-2.0.0.tgz"
+  "version" "2.0.0"
+  dependencies:
+    "bls-signatures" "^1.0.14"
+    "jscrypto" "^1.0.2"
 
 "co@^4.6.0":
   "integrity" "sha512-QVb0dM5HvG+uaxitm8wONl7jltx8dqhfU33DcqtOZcLSVIKSDDLDi7+0LbAKiyI8hD9u42m2YxXSkMGWThaecQ=="
@@ -6574,6 +6594,11 @@
   "version" "4.1.0"
   dependencies:
     "argparse" "^2.0.1"
+
+"jscrypto@^1.0.2":
+  "integrity" "sha512-lryZl0flhodv4SZHOqyb1bx5sKcJxj0VBo0Kzb4QMAg3L021IC9uGpl0RCZa+9KJwlRGSK2C80ITcwbe19OKLQ=="
+  "resolved" "https://registry.npmjs.org/jscrypto/-/jscrypto-1.0.3.tgz"
+  "version" "1.0.3"
 
 "jsdom@^16.6.0":
   "integrity" "sha512-u9Smc2G1USStM+s/x1ru5Sxrl6mPYCbByG1U/hUmqaVsm4tbNyS7CicOSRyuGQYZhTu0h84qkZZQ/I+dzizSVw=="

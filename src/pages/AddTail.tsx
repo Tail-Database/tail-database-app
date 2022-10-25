@@ -1,18 +1,45 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from "react-router-dom";
 import '../App.css';
 import Layout from '../Layout';
-
+import { convertbits, decode } from '../chia/bech32';
+import { coin_name } from '../../electron/coin_name';
 
 
 function AddTail() {
     const [hash, setHash] = useState('');
     const [name, setName] = useState('');
     const [code, setCode] = useState('');
+    const [logoNftId, setLogoNftId] = useState('');
     const [category, setCategory] = useState('');
     const [description, setDescription] = useState('');
     const [inserted, setInserted] = useState(false);
     const [failed, setFailed] = useState(false);
+    const [logoUrl, setLogoUrl] = useState<string | null>(null);
+
+    useEffect(() => {
+        // When logo is correct length we check if it is a valid nft id
+        // iff it's valid we resolve the NFT image and display it inline
+        if (logoNftId.length !== 62) {
+            return setLogoUrl(null);
+        }
+
+        // bech32m decode nft id to coin id
+        const decode_result = decode(logoNftId, 'bech32m');
+
+        // Check for valid bech32m decode
+        if (decode_result) {
+            const launcher_id_raw = convertbits(decode_result.data, 5, 8, false);
+            
+            // Check for successful bit conversion
+            if (launcher_id_raw) {
+                const launcher_id = launcher_id_raw.map(n => n.toString(16).padStart(2, '0')).join('');
+
+                window.taildatabase.getNftUri(launcher_id).then((url) => setLogoUrl(url))
+            }
+            
+        }
+        
+    }, [logoNftId]);
 
     const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -58,6 +85,7 @@ function AddTail() {
     const onHashChange = (event: React.ChangeEvent<HTMLInputElement>) => setHash(event.target.value);
     const onNameChange = (event: React.ChangeEvent<HTMLInputElement>) => setName(event.target.value);
     const onCodeChange = (event: React.ChangeEvent<HTMLInputElement>) => setCode(event.target.value);
+    const onLogoNftIdChange = (event: React.ChangeEvent<HTMLInputElement>) => setLogoNftId(event.target.value);
     const onCategoryChange = (event: React.ChangeEvent<HTMLInputElement>) => setCategory(event.target.value);
     const onDescriptionChange = (event: React.ChangeEvent<HTMLInputElement>) => setDescription(event.target.value);
 
@@ -73,10 +101,11 @@ function AddTail() {
                         <p>Hash: <input type="text" name="hash" onChange={onHashChange} /></p>
                         <p>Name: <input type="text" name="name" onChange={onNameChange} /></p>
                         <p>Code: <input type="text" name="code" onChange={onCodeChange} /></p>
+                        <p>Logo NFT ID: <input type="text" name="logo-nft-id" onChange={onLogoNftIdChange} /></p>
                         <p>Category: <input type="text" name="category" onChange={onCategoryChange} /></p>
                         <p>Description: <input type="text" name="description" onChange={onDescriptionChange} /></p>
                         <input type="submit" value="Add TAIL" />
-                        
+                        {logoUrl && <img src={logoUrl} />}
                     </form>
                 )}
                 {failed && (

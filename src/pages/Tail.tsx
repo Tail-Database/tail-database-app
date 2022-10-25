@@ -3,8 +3,6 @@ import { useParams, Link } from "react-router-dom";
 import '../App.css';
 import Layout from '../Layout';
 
-
-
 function Tail() {
     const { hash } = useParams();
     const [tail, setTail] = useState({ hash: '', name: '', code: '', category: '', description: '' });

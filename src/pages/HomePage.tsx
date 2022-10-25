@@ -17,6 +17,7 @@ declare global {
       addTail: (tailRecord: TailRecord) => Promise<InsertResponse>;
       getTails: () => Promise<TailRecord[]>;
       getTail: (hash: string) => Promise<TailRecord>;
+      getNftUri: (launcherId: string) => Promise<string>;
     }
   }
 }
