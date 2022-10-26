@@ -18,6 +18,7 @@ declare global {
       getTails: () => Promise<TailRecord[]>;
       getTail: (hash: string) => Promise<TailRecord>;
       getNftUri: (launcherId: string) => Promise<string>;
+      getTailReveal: (coin_id: string) => Promise<string>;
     }
   }
 }

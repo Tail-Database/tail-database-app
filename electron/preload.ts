@@ -6,4 +6,5 @@ contextBridge.exposeInMainWorld('taildatabase', {
     getTail: (hash: string) => ipcRenderer.invoke('get-tail', hash),
     getTails: () => ipcRenderer.invoke('get-tails'),
     getNftUri: (launcher_id: string) => ipcRenderer.invoke('get-nft-uri', launcher_id),
+    getTailReveal: (coin_id: string) => ipcRenderer.invoke('get-tail-reveal', coin_id),
 });

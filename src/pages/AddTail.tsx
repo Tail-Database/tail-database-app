@@ -116,6 +116,8 @@ function AddTail() {
                         <p>Logo NFT ID: <input type="text" name="logo-nft-id" onChange={onLogoNftIdChange} /></p>
                         <p>Category: <input type="text" name="category" onChange={onCategoryChange} /></p>
                         <p>Description: <input type="text" name="description" onChange={onDescriptionChange} /></p>
+                        <p>CAT Coin ID: <input type="text" name="coin-id" onChange={onCodeChange} /></p>
+                        <p><small>Provide the coin id of any coin that is of this CAT. This is used to find the TAIL reveal.</small></p>
                         <input type="submit" value="Add TAIL" />
                         {logoUrl && <img src={logoUrl} />}
                     </form>

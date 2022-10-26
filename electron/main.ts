@@ -14,6 +14,7 @@ import { hex_to_program, uncurry } from './clvm';
 import { NFT_STATE_LAYER_MOD, SINGLETON_MOD } from './puzzles';
 import { connectionOptions } from './config';
 import { getNftUri } from './nft';
+import { getTailReveal } from './cat';
 
 process.on('uncaughtException', (e) => console.error(e));
 
@@ -65,6 +66,7 @@ function createWindow() {
     ipcMain.handle('get-tail', (_, hash) => tailStore.get(hash));
     ipcMain.handle('add-tail', (_, tailRecord: TailRecord) => tailStore.insert(tailRecord));
     ipcMain.handle('get-nft-uri', async(_, launcher_id: string) => getNftUri(launcher_id));
+    ipcMain.handle('get-tail-reveal', async(_, coin_id: string) => getTailReveal(coin_id));
 
     // DevTools
     installExtension(REACT_DEVELOPER_TOOLS)
