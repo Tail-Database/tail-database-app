@@ -5,11 +5,17 @@ import Layout from '../Layout';
 
 function Tail() {
     const { hash } = useParams();
-    const [tail, setTail] = useState({ hash: '', name: '', code: '', category: '', description: '' });
+    const [tail, setTail] = useState({ hash: '', name: '', code: '', category: '', description: '', launcherId: '' });
+    const [logoUrl, setLogoUrl] = useState<string | null>(null);
 
     useEffect(() => {
         window.taildatabase.getTail(hash || '')
-            .then((res: any) => setTail(res))
+            .then((res: any) => {
+                setTail(res);
+
+                return window.taildatabase.getNftUri(res.launcherId);
+            })
+            .then((url) => setLogoUrl(url))
             .catch(console.error)
     }, []);
 
@@ -22,6 +28,7 @@ function Tail() {
                 <p>Code: {tail.code}</p>
                 <p>Category: {tail.category}</p>
                 <p>Description: {tail.description}</p>
+                {logoUrl && (<img src={logoUrl} />)}
             </div>
         </Layout>
     );
