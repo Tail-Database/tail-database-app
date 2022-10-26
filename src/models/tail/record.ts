@@ -4,6 +4,7 @@ export interface TailRecord {
     code: string;
     category: string;
     description: string;
+    launcherId: string;
     website_url?: string;
     discord_url?: string;
     twitter_url?: string;

@@ -14,13 +14,16 @@ function AddTail() {
     const [description, setDescription] = useState('');
     const [inserted, setInserted] = useState(false);
     const [failed, setFailed] = useState(false);
+    const [launcherId, setLauncherId] = useState<string | null>(null);
     const [logoUrl, setLogoUrl] = useState<string | null>(null);
 
     useEffect(() => {
         // When logo is correct length we check if it is a valid nft id
         // iff it's valid we resolve the NFT image and display it inline
         if (logoNftId.length !== 62) {
-            return setLogoUrl(null);
+            setLauncherId(null);
+            setLogoUrl(null);
+            return
         }
 
         // bech32m decode nft id to coin id
@@ -34,7 +37,10 @@ function AddTail() {
             if (launcher_id_raw) {
                 const launcher_id = launcher_id_raw.map(n => n.toString(16).padStart(2, '0')).join('');
 
-                window.taildatabase.getNftUri(launcher_id).then((url) => setLogoUrl(url))
+                window.taildatabase.getNftUri(launcher_id).then((url) => {
+                    setLauncherId(launcher_id);
+                    setLogoUrl(url);
+                })
             }
             
         }
@@ -59,13 +65,19 @@ function AddTail() {
             return;
         }
 
+        if (!launcherId || launcherId.length !== 64) {
+            console.error('!launcherId || launcherId.length !== 64');
+            return;
+        }
+
         try {
             const { tx_id } = await window.taildatabase.addTail({
                 hash,
                 name,
                 code,
                 category,
-                description
+                description,
+                launcherId
             });
 
             if (tx_id) {
