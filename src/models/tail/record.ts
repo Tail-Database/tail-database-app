@@ -5,6 +5,7 @@ export interface TailRecord {
     category: string;
     description: string;
     launcherId: string;
+    eveCoinId: string;
     website_url?: string;
     discord_url?: string;
     twitter_url?: string;

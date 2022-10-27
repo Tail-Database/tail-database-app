@@ -1,27 +1,21 @@
-import { readFileSync } from 'fs';
-import { homedir } from "os";
 import * as path from 'path';
-import { SExp, convert_atom_to_bytes } from 'clvm';
 import { app, ipcMain, BrowserWindow } from 'electron';
 import * as isDev from 'electron-is-dev';
 import installExtension, { REACT_DEVELOPER_TOOLS } from "electron-devtools-installer";
-
 import { DataLayer } from '../src/datalayer/rpc/data_layer';
 import { Tail } from '../src/models/tail/model';
 import { TailRecord } from '../src/models/tail/record';
-import { coin_name } from './coin_name';
-import { hex_to_program, uncurry } from './clvm';
-import { NFT_STATE_LAYER_MOD, SINGLETON_MOD } from './puzzles';
 import { connectionOptions } from './config';
 import { getNftUri } from './nft';
 import { getTailReveal } from './cat';
+import { Coin } from '../src/coin/rpc/coin';
 
 process.on('uncaughtException', (e) => console.error(e));
 
 // Temporary hacking this in here - will change later
 const id = '073edb36a4a982c3d00999b1d925d304e7867afa68eb535e3071ee2f682700ea';
 
-
+const coin = new Coin(connectionOptions);
 const dl = new DataLayer({
     id,
     ...connectionOptions
@@ -65,8 +59,8 @@ function createWindow() {
     ipcMain.handle('get-tails', () => tailStore.all());
     ipcMain.handle('get-tail', (_, hash) => tailStore.get(hash));
     ipcMain.handle('add-tail', (_, tailRecord: TailRecord) => tailStore.insert(tailRecord));
-    ipcMain.handle('get-nft-uri', async(_, launcher_id: string) => getNftUri(launcher_id));
-    ipcMain.handle('get-tail-reveal', async(_, coin_id: string) => getTailReveal(coin_id));
+    ipcMain.handle('get-nft-uri', async(_, launcher_id: string) => getNftUri(launcher_id, coin));
+    ipcMain.handle('get-tail-reveal', async(_, coin_id: string) => getTailReveal(coin_id, coin));
 
     // DevTools
     installExtension(REACT_DEVELOPER_TOOLS)

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import '../App.css';
 import Layout from '../Layout';
 import { convertbits, decode } from '../chia/bech32';
-import { coin_name } from '../../electron/coin_name';
 
 
 function AddTail() {
@@ -12,8 +11,9 @@ function AddTail() {
     const [logoNftId, setLogoNftId] = useState('');
     const [category, setCategory] = useState('');
     const [description, setDescription] = useState('');
+    const [coinId, setCoinId] = useState('');
     const [inserted, setInserted] = useState(false);
-    const [failed, setFailed] = useState(false);
+    const [failedMessage, setFailedMessage] = useState('');
     const [launcherId, setLauncherId] = useState<string | null>(null);
     const [logoUrl, setLogoUrl] = useState<string | null>(null);
 
@@ -70,6 +70,31 @@ function AddTail() {
             return;
         }
 
+        if (coinId.length !== 64) {
+            console.error('coinId.length !== 64');
+            return;
+        }
+
+        let eveCoinId = null;
+
+        try {
+            const [eve_coin_id, tail_hash] = await window.taildatabase.getTailReveal(coinId);
+
+            if (tail_hash !== hash) {
+                console.error(`tail_hash !== hash ${tail_hash} !== ${hash}`);
+                setInserted(false);
+                setFailedMessage(`Coin ID is not for correct type of CAT`);
+                return;
+            }
+
+            eveCoinId = eve_coin_id;
+        } catch (err) {
+            console.error(err);
+            setInserted(false);
+            setFailedMessage(`Error with passed Coin ID: ${err}`);
+            return;
+        }
+
         try {
             const { tx_id } = await window.taildatabase.addTail({
                 hash,
@@ -77,15 +102,16 @@ function AddTail() {
                 code,
                 category,
                 description,
-                launcherId
+                launcherId,
+                eveCoinId
             });
 
             if (tx_id) {
                 setInserted(true);
-                setFailed(false);
+                setFailedMessage('');
             } else {
                 setInserted(false);
-                setFailed(true);
+                setFailedMessage('Failed to submit TAIL record to mempool. You can only submit the same TAIL hash once. If you recently submitted a record you must wait for it to clear before submitting another.');
             }
 
             console.log(hash, name, code, tx_id)
@@ -100,6 +126,7 @@ function AddTail() {
     const onLogoNftIdChange = (event: React.ChangeEvent<HTMLInputElement>) => setLogoNftId(event.target.value);
     const onCategoryChange = (event: React.ChangeEvent<HTMLInputElement>) => setCategory(event.target.value);
     const onDescriptionChange = (event: React.ChangeEvent<HTMLInputElement>) => setDescription(event.target.value);
+    const onCoinIdChange = (event: React.ChangeEvent<HTMLInputElement>) => setCoinId(event.target.value);
 
     return (
         <Layout>
@@ -116,14 +143,14 @@ function AddTail() {
                         <p>Logo NFT ID: <input type="text" name="logo-nft-id" onChange={onLogoNftIdChange} /></p>
                         <p>Category: <input type="text" name="category" onChange={onCategoryChange} /></p>
                         <p>Description: <input type="text" name="description" onChange={onDescriptionChange} /></p>
-                        <p>CAT Coin ID: <input type="text" name="coin-id" onChange={onCodeChange} /></p>
+                        <p>CAT Coin ID: <input type="text" name="coin-id" onChange={onCoinIdChange} /></p>
                         <p><small>Provide the coin id of any coin that is of this CAT. This is used to find the TAIL reveal.</small></p>
                         <input type="submit" value="Add TAIL" />
                         {logoUrl && <img src={logoUrl} />}
                     </form>
                 )}
-                {failed && (
-                    <>Failed to submit TAIL record to mempool. You can only submit the same TAIL hash once. If you recently submitted a record you must wait for it to clear before submitting another.</>
+                {failedMessage && (
+                    <>{failedMessage}</>
                 )}
 
             </div>
