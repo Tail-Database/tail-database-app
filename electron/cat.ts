@@ -33,7 +33,6 @@ const match_cat_puzzle = (puzzle: SExp) => {
 };
 
 export const getTailReveal = async (coin_id: string, rpc: Coin): Promise<[string, string, string]> => {
-    // TODO: copy logic over from tail database and do a bit cleaner as know better way now
     let current_coin = coin_id;
 
     while (true) {
