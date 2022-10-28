@@ -5,7 +5,10 @@ function Layout(props: PropsWithChildren) {
     return (
         <>
             <Header />
-            {props.children}
+            <main role="main" className="container">
+                {props.children}
+            </main>
+            
         </>
     );
 }

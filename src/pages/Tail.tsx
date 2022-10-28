@@ -29,15 +29,45 @@ function Tail() {
 
     return (
         <Layout>
-            <div className="tail-info">
-                <h1>{tail.name}</h1>
-                <p>Hash: {tail.hash}</p>
-                <p>Code: {tail.code}</p>
-                <p>Category: {tail.category}</p>
-                <p>Description: {tail.description}</p>
-                <p>Eve coin id: {tail.eveCoinId}</p>
-                <p>TAIL reveal: {tailReveal}</p>
-                {logoUrl && (<img src={logoUrl} />)}
+            <div className="row">
+                <div className="col-md-12">
+                    <table className="table">
+                        <thead>
+                            <tr>
+                                <td colSpan={2}>
+                                    <h1>{tail.name}</h1>
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Hash</td>
+                                <td>{tail.hash}</td>
+                            </tr>
+                            <tr>
+                                <td>Code</td>
+                                <td>{tail.code}</td>
+                            </tr>
+                            <tr>
+                                <td>Category</td>
+                                <td>{tail.category}</td>
+                            </tr>
+                            <tr>
+                                <td>Description</td>
+                                <td>{tail.description}</td>
+                            </tr>
+                            <tr>
+                                <td>Eve coin id</td>
+                                <td>{tail.eveCoinId}</td>
+                            </tr>
+                            <tr>
+                                <td>TAIL reveal</td>
+                                <td>{tailReveal}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    {logoUrl && (<img src={logoUrl} />)}
+                </div>
             </div>
         </Layout>
     );

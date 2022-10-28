@@ -9,6 +9,7 @@ import reportWebVitals from './reportWebVitals';
 import HomePage from './pages/HomePage';
 import Tail from './pages/Tail';
 import AddTail from './pages/AddTail';
+import 'bootstrap/dist/css/bootstrap.css';
 
 const router = createBrowserRouter([
   {

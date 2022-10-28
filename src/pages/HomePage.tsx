@@ -34,7 +34,7 @@ const columnHelper = createColumnHelper<Tail>();
 const columns = [
   columnHelper.accessor('hash', {
     header: () => 'TAIL Hash / Asset ID',
-    cell: info => <Link to={`/tail/${info.getValue()}`}>{info.getValue().slice(0, 20)}...</Link>,
+    cell: info => <Link to={`/tail/${info.getValue()}`}>{info.getValue()}</Link>,
     footer: info => info.column.id,
   }),
   columnHelper.accessor(row => row.name, {
@@ -64,7 +64,9 @@ function HomePage() {
 
   return (
     <Layout>
-      <table className="tail-table">
+      <div className="row">
+        <div className="col-md-12">
+        <table className="table">
         <thead>
           {table.getHeaderGroups().map(headerGroup => (
             <tr key={headerGroup.id}>
@@ -93,6 +95,9 @@ function HomePage() {
           ))}
         </tbody>
       </table>
+        </div>
+      </div>
+      
     </Layout>
   );
 }
