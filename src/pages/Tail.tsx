@@ -38,6 +38,11 @@ function Tail() {
                                     <h1>{tail.name}</h1>
                                 </td>
                             </tr>
+                            <tr>
+                                <td colSpan={2} style={{ textAlign: 'center'}}>
+                                    {logoUrl && (<img src={logoUrl} style={{ width: '15em' }} />)}
+                                </td>
+                            </tr>
                         </thead>
                         <tbody>
                             <tr>
@@ -62,11 +67,11 @@ function Tail() {
                             </tr>
                             <tr>
                                 <td>TAIL reveal</td>
-                                <td>{tailReveal}</td>
+                                <td>
+                                    <div style={{ width: '35em', overflowX: 'auto' }}>{tailReveal}</div></td>
                             </tr>
                         </tbody>
                     </table>
-                    {logoUrl && (<img src={logoUrl} />)}
                 </div>
             </div>
         </Layout>
