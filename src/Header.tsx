@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import logo from './assets/logo-light.png';
 
 const SyncStatus = () => {
-    const [synced, setSynced] = useState(false);
+    const [synced, setSynced] = useState(true);
 
     useEffect(() => {
         setInterval(() => {
