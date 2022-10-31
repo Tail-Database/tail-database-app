@@ -8,7 +8,9 @@ import { TailRecord } from '../src/models/tail/record';
 import { connectionOptions } from './config';
 import { getNftUri } from './nft';
 import { getTailReveal } from './cat';
+import { Blockchain } from '../src/blockchain/rpc/blockchain';
 import { Coin } from '../src/coin/rpc/coin';
+import { synced } from './blockchain';
 
 process.on('uncaughtException', (e) => console.error(e));
 
@@ -16,6 +18,7 @@ process.on('uncaughtException', (e) => console.error(e));
 const id = '073edb36a4a982c3d00999b1d925d304e7867afa68eb535e3071ee2f682700ea';
 
 const coin = new Coin(connectionOptions);
+const blockchain = new Blockchain(connectionOptions);
 const dl = new DataLayer({
     id,
     ...connectionOptions
@@ -56,6 +59,7 @@ function createWindow() {
     }
 
 
+    ipcMain.handle('synced', () => synced(blockchain));
     ipcMain.handle('get-tails', () => tailStore.all());
     ipcMain.handle('get-tail', (_, hash) => tailStore.get(hash));
     ipcMain.handle('add-tail', (_, tailRecord: TailRecord) => tailStore.insert(tailRecord));

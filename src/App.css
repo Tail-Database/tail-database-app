@@ -35,6 +35,13 @@
   right: 1em;
 }
 
+.sync-status {
+  pointer-events: none; 
+  width: 100%;
+  position: absolute;
+  left: 1em;
+}
+
 .menu-button {
   pointer-events: all; 
   float: right;
