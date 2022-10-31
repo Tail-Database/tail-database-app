@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from "react-router-dom";
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import '../App.css';
 import Layout from '../Layout';
 
@@ -39,7 +41,7 @@ function Tail() {
                                 </td>
                             </tr>
                             <tr>
-                                <td colSpan={2} style={{ textAlign: 'center'}}>
+                                <td colSpan={2} style={{ textAlign: 'center' }}>
                                     {logoUrl && (<img src={logoUrl} style={{ width: '15em' }} />)}
                                 </td>
                             </tr>
@@ -68,7 +70,12 @@ function Tail() {
                             <tr>
                                 <td>TAIL reveal</td>
                                 <td>
-                                    <div style={{ width: '35em', overflowX: 'auto' }}>{tailReveal}</div></td>
+                                    <div style={{ width: '35em', overflowX: 'auto' }}>
+                                        <SyntaxHighlighter language="lisp" style={docco} wrapLongLines>
+                                            {tailReveal}
+                                        </SyntaxHighlighter>
+                                    </div>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
