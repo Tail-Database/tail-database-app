@@ -37,6 +37,7 @@ export class Tail implements Model<TailRecord> {
         return this.serializer.decode(data.value);
     }
 
+    // Todo: this needs verification of data based on "tail database standard" - create function covered by tests
     public async all(): Promise<TailRecord[]> {
         const kvs = await this.dataLayer.get_keys_values();
         const values = (kvs.keys_values || []).map(kv => kv.value.slice(2));
