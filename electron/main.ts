@@ -5,7 +5,7 @@ import installExtension, { REACT_DEVELOPER_TOOLS } from "electron-devtools-insta
 import { DataLayer } from '../src/datalayer/rpc/data_layer';
 import { Tail } from '../src/models/tail/model';
 import { TailRecord } from '../src/models/tail/record';
-import { connectionOptions } from './config';
+import { connectionOptions, store_id } from './config';
 import { getNftUri } from './nft';
 import { getTailReveal } from './cat';
 import { Blockchain } from '../src/blockchain/rpc/blockchain';
@@ -14,13 +14,10 @@ import { synced } from './blockchain';
 
 process.on('uncaughtException', (e) => console.error(e));
 
-// Temporary hacking this in here - will change later
-const id = '073edb36a4a982c3d00999b1d925d304e7867afa68eb535e3071ee2f682700ea';
-
 const coin = new Coin(connectionOptions);
 const blockchain = new Blockchain(connectionOptions);
 const dl = new DataLayer({
-    id,
+    id: store_id,
     ...connectionOptions
 })
 
