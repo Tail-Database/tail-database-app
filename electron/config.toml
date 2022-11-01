@@ -2,3 +2,6 @@ network = "testnet10"
 
 [testnet10]
 store_id = "073edb36a4a982c3d00999b1d925d304e7867afa68eb535e3071ee2f682700ea"
+
+[mainnet]
+store_id = ""
