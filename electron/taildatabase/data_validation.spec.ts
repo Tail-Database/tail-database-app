@@ -1,4 +1,4 @@
-import { TailRecord } from '../models/tail/record';
+import { TailRecord } from '../../src/models/tail/record';
 import { parseTailRecords, validateTailRecord } from './data_validation';
 
 describe('Tail Database Data Validation', () => {

@@ -1,5 +1,5 @@
 import { URL } from 'url';
-import { TailRecord } from '../models/tail/record';
+import { TailRecord } from '../../src/models/tail/record';
 
 const categories = [
     'gaming',
@@ -39,7 +39,7 @@ export const validateTailRecord = (tailRecord: TailRecord) => {
         throw new Error('Currency code must have length between 1 and 5');
     }
 
-    if (tailRecord.description.length < 20 || tailRecord.description.length > 5000) {
+    if (tailRecord.description.length < 1 || tailRecord.description.length > 5000) {
         throw new Error('Description must have length between 20 and 5000');
     }
 

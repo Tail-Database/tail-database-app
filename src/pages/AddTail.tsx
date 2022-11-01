@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import '../App.css';
 import Layout from '../Layout';
 import { convertbits, decode } from '../chia/bech32';
+import { TailRecord } from '../models/tail/record';
 
 
 function AddTail() {

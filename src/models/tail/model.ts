@@ -2,6 +2,7 @@ import { DataLayer, InsertResponse, UpdateResponse } from '../../datalayer/rpc/d
 import { Model } from '../../datalayer/model';
 import { TailRecord } from './record';
 import { TailSerializer } from './serializer';
+import { parseTailRecords } from '../../../electron/taildatabase/data_validation';
 
 export class Tail implements Model<TailRecord> {
     private readonly serializer = new TailSerializer();
@@ -37,11 +38,10 @@ export class Tail implements Model<TailRecord> {
         return this.serializer.decode(data.value);
     }
 
-    // Todo: this needs verification of data based on "tail database standard" - create function covered by tests
     public async all(): Promise<TailRecord[]> {
         const kvs = await this.dataLayer.get_keys_values();
         const values = (kvs.keys_values || []).map(kv => kv.value.slice(2));
 
-        return [...this.serializer.decode_all(values)];
+        return parseTailRecords([...this.serializer.decode_all(values)]);
     }
 }

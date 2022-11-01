@@ -22,5 +22,5 @@
   },
   "include": [
     "src"
-, "electron/coin_name.ts"  ]
+, "electron/coin_name.ts", "electron/taildatabase"  ]
 }
