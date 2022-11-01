@@ -28,7 +28,7 @@ const validateUrl = (name: string, url: string | undefined) => {
 // Rules for validating a TailRecord
 export const validateTailRecord = (tailRecord: TailRecord) => {
     if (tailRecord.hash.length !== 64) {
-        throw new Error('Hash must be 64 characters')
+        throw new Error('Hash must be 64 characters');
     }
 
     if (tailRecord.name.length < 1 || tailRecord.name.length > 100) {
@@ -66,4 +66,36 @@ export const validateTailRecord = (tailRecord: TailRecord) => {
  * - Only one entry per TAIL hash is allowed
  * - First instance of currency code is the valid entry
  */
-export const parseTailRecords = (tailRecords: TailRecord[]) => {};
+export const parseTailRecords = (tailRecords: TailRecord[]) => {
+    const hashes = new Map<string, boolean>();
+    const codes = new Map<string, TailRecord>();
+    const results = [];
+
+    for (const tailRecord of tailRecords) {
+        try {
+            validateTailRecord(tailRecord);
+        } catch (err) {
+            console.error(err);
+            // Skip invalid records stored in DataLayer
+            continue;
+        }
+        
+
+        if (hashes.has(tailRecord.hash)) {
+            // This should never happen with data that has been retrieved directly from DataLayer
+            // It could happen if a developer writes code that modifes an array of tailRecords
+            // and passes them into this function
+            throw new Error('Multiple TAIL records with same hash');
+        }
+
+        hashes.set(tailRecord.hash, true);
+
+        // We only add the first TAIL record with a given code to the results
+        if (!codes.has(tailRecord.code)) {
+            codes.set(tailRecord.code, tailRecord);
+            results.push(tailRecord);
+        }
+    }
+
+    return results;
+};
