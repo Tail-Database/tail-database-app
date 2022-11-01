@@ -10,7 +10,6 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "@types/electron-devtools-installer": "^2.2.2",
-    "@types/jest": "^27.5.2",
     "@types/node": "^16.11.68",
     "@types/react": "^18.0.21",
     "@types/react-dom": "^18.0.6",
@@ -68,6 +67,7 @@
     }
   },
   "devDependencies": {
+    "@types/jest": "^29.2.1",
     "@types/msgpack-lite": "^0.1.8",
     "@types/react-syntax-highlighter": "^15.5.5",
     "concurrently": "^7.4.0",

@@ -7,7 +7,6 @@ const SyncStatus = () => {
 
     useEffect(() => {
         setInterval(() => {
-            console.log(window.taildatabase.synced())
             window.taildatabase.synced()
                 .then(syncstatus => setSynced(syncstatus));
         }, 2500);

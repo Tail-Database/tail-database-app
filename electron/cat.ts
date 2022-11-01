@@ -98,7 +98,7 @@ export const getTailReveal = async (coin_id: string, rpc: Coin): Promise<[string
                                         go('opd', tail.toString());
                                       });
 
-                                    return [child_coin_name, hashed_tail_reveal, tail_reveal];
+                                    return [child_coin_name.slice(2), hashed_tail_reveal, tail_reveal];
                                 }
                             }
                         }

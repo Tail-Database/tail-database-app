@@ -1,5 +1,5 @@
 import { URL } from 'url';
-import { TailRecord } from '../../src/models/tail/record';
+import { TailRecord } from '../models/tail/record';
 
 const categories = [
     'gaming',
@@ -75,7 +75,7 @@ export const parseTailRecords = (tailRecords: TailRecord[]) => {
         try {
             validateTailRecord(tailRecord);
         } catch (err) {
-            console.error(err);
+            console.error(err, tailRecord);
             // Skip invalid records stored in DataLayer
             continue;
         }
