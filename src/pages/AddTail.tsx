@@ -173,17 +173,31 @@ function AddTail() {
                 )}
                 {!inserted && (
                     <form id="form-add-tail" onSubmit={onSubmit}>
-                        <p>Hash: <input type="text" name="hash" onChange={onHashChange} /></p>
-                        <p>Name: <input type="text" name="name" onChange={onNameChange} /></p>
-                        <p>Code: <input type="text" name="code" onChange={onCodeChange} /></p>
-                        <p>Logo NFT ID: <input type="text" name="logo-nft-id" onChange={onLogoNftIdChange} /></p>
-                        {/* @ts-ignore */}
-                        <p>Category: <Select styles={customStyles} defaultValue={category} onChange={setCategory} options={categoryOptions} /></p>
-                        <p>Description: <input type="text" name="description" onChange={onDescriptionChange} /></p>
-                        <p>CAT Coin ID: <input type="text" name="coin-id" onChange={onCoinIdChange} /></p>
+                        <div className="form-group">
+                            <label htmlFor="hash">Hash</label> <input type="text" className="form-control" id="hash" name="hash" onChange={onHashChange} />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="name">Name</label> <input type="text" className="form-control" id="name" name="name" onChange={onNameChange} />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="code">Code</label> <input type="text" className="form-control" id="code" name="code" onChange={onCodeChange} />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="logo-nft-id">Logo NFT ID</label> <input type="text" className="form-control" id="logo-nft-id" name="logo-nft-id" onChange={onLogoNftIdChange} />
+                        </div>
+                        <div className="form-group">
+                            {/* @ts-ignore */}
+                            <label htmlFor="category">Category</label> <Select styles={customStyles} defaultValue={category} onChange={setCategory} options={categoryOptions} id="category" />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="description">Description</label> <input type="text" className="form-control" id="description" name="description" onChange={onDescriptionChange} />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="coin-id">CAT Coin ID</label> <input type="text" className="form-control" id="coin-id" name="coin-id" onChange={onCoinIdChange} />
+                        </div>
                         <p><small>Provide the coin id of any coin that is of this CAT. This is used to find the TAIL reveal.</small></p>
+                        <p>{logoUrl && <img src={logoUrl} />}</p>
                         <input type="submit" value="Add TAIL" />
-                        {logoUrl && <img src={logoUrl} />}
                     </form>
                 )}
                 {failedMessage && (
