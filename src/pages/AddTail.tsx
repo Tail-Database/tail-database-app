@@ -187,7 +187,7 @@ function AddTail() {
                         </div>
                         <div className="form-group">
                             {/* @ts-ignore */}
-                            <label htmlFor="category">Category</label> <Select styles={customStyles} defaultValue={category} onChange={setCategory} options={categoryOptions} id="category" />
+                            <label htmlFor="category">Category</label> <Select styles={customStyles} defaultValue={category} onChange={e => { setCategory(e.value) }} options={categoryOptions} id="category" />
                         </div>
                         <div className="form-group">
                             <label htmlFor="description">Description</label> <input type="text" className="form-control" id="description" name="description" onChange={onDescriptionChange} />
