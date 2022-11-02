@@ -1,17 +1,8 @@
 import { URL } from 'url';
 import { TailRecord } from '../models/tail/record';
+import { CATEGORIES } from './constants';
 
 const disallowed_codes = ['xch'];
-
-const categories = [
-    'gaming',
-    'event',
-    'education',
-    'meme',
-    'stablecoin',
-    'wrapped',
-    'platform',
-];
 
 const validateUrl = (name: string, url: string | undefined) => {
     if (url) {
@@ -45,8 +36,8 @@ export const validateTailRecord = (tailRecord: TailRecord) => {
         throw new Error('Description must have length between 20 and 5000');
     }
 
-    if (!categories.includes(tailRecord.category)) {
-        throw new Error(`Invalid category. Must be one of: ${categories.join(',')}`);
+    if (!CATEGORIES.includes(tailRecord.category)) {
+        throw new Error(`Invalid category. Must be one of: ${CATEGORIES.join(',')}`);
     }
 
     if (tailRecord.launcherId.length !== 64) {

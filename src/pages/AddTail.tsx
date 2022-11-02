@@ -1,16 +1,47 @@
 import React, { useEffect, useState } from 'react';
+import Select, { GroupBase, StylesConfig } from 'react-select'
 import '../App.css';
 import Layout from '../Layout';
 import { convertbits, decode } from '../chia/bech32';
 import { TailRecord } from '../models/tail/record';
+import { CATEGORIES } from '../taildatabase/constants';
 
+const customStyles: StylesConfig<React.ChangeEvent<HTMLInputElement>, false, GroupBase<React.ChangeEvent<HTMLInputElement>>> = {
+    option: (base, state) => ({
+        ...base,
+        background: "#fff",
+        color: "#333",
+        borderRadius: state.isFocused ? "0" : 0,
+        "&:hover": {
+            background: "#eee",
+        }
+    }),
+    menu: base => ({
+        ...base,
+        borderRadius: 0,
+        marginTop: 0
+    }),
+    menuList: base => ({
+        ...base,
+        padding: 0
+    }),
+    control: (base, state) => ({
+        ...base,
+        padding: 2
+    })
+};
+
+const categoryOptions = CATEGORIES.map(category => ({
+    value: category,
+    label: category
+}));
 
 function AddTail() {
     const [hash, setHash] = useState('');
     const [name, setName] = useState('');
     const [code, setCode] = useState('');
     const [logoNftId, setLogoNftId] = useState('');
-    const [category, setCategory] = useState('');
+    const [category, setCategory] = useState(null);
     const [description, setDescription] = useState('');
     const [coinId, setCoinId] = useState('');
     const [inserted, setInserted] = useState(false);
@@ -33,7 +64,7 @@ function AddTail() {
         // Check for valid bech32m decode
         if (decode_result) {
             const launcher_id_raw = convertbits(decode_result.data, 5, 8, false);
-            
+
             // Check for successful bit conversion
             if (launcher_id_raw) {
                 const launcher_id = launcher_id_raw.map(n => n.toString(16).padStart(2, '0')).join('');
@@ -43,9 +74,9 @@ function AddTail() {
                     setLogoUrl(url);
                 })
             }
-            
+
         }
-        
+
     }, [logoNftId]);
 
     const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -63,6 +94,11 @@ function AddTail() {
 
         if (code.length < 1 || code.length > 5) {
             console.error('code.length <1 || code.length > 5');
+            return;
+        }
+
+        if (!CATEGORIES.includes(category || '')) {
+            console.error('!CATEGORIES.includes(category || \'\')');
             return;
         }
 
@@ -101,7 +137,7 @@ function AddTail() {
                 hash,
                 name,
                 code,
-                category,
+                category: category || '',
                 description,
                 launcherId,
                 eveCoinId
@@ -125,7 +161,6 @@ function AddTail() {
     const onNameChange = (event: React.ChangeEvent<HTMLInputElement>) => setName(event.target.value);
     const onCodeChange = (event: React.ChangeEvent<HTMLInputElement>) => setCode(event.target.value);
     const onLogoNftIdChange = (event: React.ChangeEvent<HTMLInputElement>) => setLogoNftId(event.target.value);
-    const onCategoryChange = (event: React.ChangeEvent<HTMLInputElement>) => setCategory(event.target.value);
     const onDescriptionChange = (event: React.ChangeEvent<HTMLInputElement>) => setDescription(event.target.value);
     const onCoinIdChange = (event: React.ChangeEvent<HTMLInputElement>) => setCoinId(event.target.value);
 
@@ -142,7 +177,8 @@ function AddTail() {
                         <p>Name: <input type="text" name="name" onChange={onNameChange} /></p>
                         <p>Code: <input type="text" name="code" onChange={onCodeChange} /></p>
                         <p>Logo NFT ID: <input type="text" name="logo-nft-id" onChange={onLogoNftIdChange} /></p>
-                        <p>Category: <input type="text" name="category" onChange={onCategoryChange} /></p>
+                        {/* @ts-ignore */}
+                        <p>Category: <Select styles={customStyles} defaultValue={category} onChange={setCategory} options={categoryOptions} /></p>
                         <p>Description: <input type="text" name="description" onChange={onDescriptionChange} /></p>
                         <p>CAT Coin ID: <input type="text" name="coin-id" onChange={onCoinIdChange} /></p>
                         <p><small>Provide the coin id of any coin that is of this CAT. This is used to find the TAIL reveal.</small></p>
