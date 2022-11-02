@@ -1,6 +1,8 @@
 import { URL } from 'url';
 import { TailRecord } from '../models/tail/record';
 
+const disallowed_codes = ['xch'];
+
 const categories = [
     'gaming',
     'event',
@@ -58,6 +60,10 @@ export const validateTailRecord = (tailRecord: TailRecord) => {
     validateUrl('Website', tailRecord.website_url);
     validateUrl('Discord', tailRecord.discord_url);
     validateUrl('Twitter', tailRecord.twitter_url);
+
+    if (disallowed_codes.includes(tailRecord.code.toLowerCase())) {
+        throw new Error(`Currency code is disallowed: ${tailRecord.code}`)
+    }
 }
 
 /**

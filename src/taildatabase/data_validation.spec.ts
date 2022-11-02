@@ -117,6 +117,13 @@ describe('Tail Database Data Validation', () => {
                 discord_url: 'google'
             })).toThrowError('Discord URL is invalid');
         });
+
+        it('rejects XCH as currency code', () => {
+            expect(() => validateTailRecord({
+                ...validTailRecord,
+                code: 'XCH'
+            })).toThrowError('Currency code is disallowed: XCH');
+        });
     });
 
     describe('parseTailRecords', () => {
