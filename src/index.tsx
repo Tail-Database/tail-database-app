@@ -1,15 +1,20 @@
+import 'bootstrap/dist/css/bootstrap.css';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+import TimeAgo from 'javascript-time-ago'
+import en from 'javascript-time-ago/locale/en.json'
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import HomePage from './pages/HomePage';
 import Tail from './pages/Tail';
 import AddTail from './pages/AddTail';
-import 'bootstrap/dist/css/bootstrap.css';
+
+TimeAgo.addDefaultLocale(en)
+
 
 const router = createBrowserRouter([
   {

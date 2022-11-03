@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import ReactTimeAgo from 'react-time-ago'
 import {
   createColumnHelper,
   flexRender,
@@ -52,6 +53,7 @@ const columns = [
 ];
 
 const Tails = () => {
+  const [updated, setUpdated] = useState<number | null>(null);
   const [tails, setTails] = useState([]);
   const table = useReactTable({
     data: tails,
@@ -64,41 +66,46 @@ const Tails = () => {
       window.taildatabase.getTails()
         .then((res: any) => setTails(res))
         .then(() => {
+          setUpdated(Date.now());
           setTimeout(getTails, 10000);
         });
     })();
   }, []);
 
   return (
-    <table className="table">
-      <thead>
-        {table.getHeaderGroups().map(headerGroup => (
-          <tr key={headerGroup.id}>
-            {headerGroup.headers.map(header => (
-              <th key={header.id}>
-                {header.isPlaceholder
-                  ? null
-                  : flexRender(
-                    header.column.columnDef.header,
-                    header.getContext()
-                  )}
-              </th>
-            ))}
-          </tr>
-        ))}
-      </thead>
-      <tbody>
-        {table.getRowModel().rows.map(row => (
-          <tr key={row.id}>
-            {row.getVisibleCells().map(cell => (
-              <td key={cell.id}>
-                {flexRender(cell.column.columnDef.cell, cell.getContext())}
-              </td>
-            ))}
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <>
+      <table className="table">
+        <thead>
+          {table.getHeaderGroups().map(headerGroup => (
+            <tr key={headerGroup.id}>
+              {headerGroup.headers.map(header => (
+                <th key={header.id}>
+                  {header.isPlaceholder
+                    ? null
+                    : flexRender(
+                      header.column.columnDef.header,
+                      header.getContext()
+                    )}
+                </th>
+              ))}
+            </tr>
+          ))}
+        </thead>
+        <tbody>
+          {table.getRowModel().rows.map(row => (
+            <tr key={row.id}>
+              {row.getVisibleCells().map(cell => (
+                <td key={cell.id}>
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      {updated && (<>Last updated: <ReactTimeAgo date={updated} locale="en-US" timeStyle={"round"}/></>)}
+    </>
+
   );
 };
 
