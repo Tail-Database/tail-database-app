@@ -64,7 +64,7 @@ const Tails = () => {
       window.taildatabase.getTails()
         .then((res: any) => setTails(res))
         .then(() => {
-          setTimeout(getTails, 2500);
+          setTimeout(getTails, 10000);
         });
     })();
   }, []);

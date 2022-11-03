@@ -82,6 +82,8 @@ function AddTail() {
     const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
+        const id = coinId.slice(0, 2) == '0x' ? coinId.slice(2) : coinId;
+
         if (hash.length !== 64) {
             console.error('hash.length !== 64');
             return;
@@ -107,7 +109,7 @@ function AddTail() {
             return;
         }
 
-        if (coinId.length !== 64) {
+        if (id.length !== 64) {
             console.error('coinId.length !== 64');
             return;
         }
@@ -115,7 +117,7 @@ function AddTail() {
         let eveCoinId = null;
 
         try {
-            const [eve_coin_id, tail_hash] = await window.taildatabase.getTailReveal(coinId);
+            const [eve_coin_id, tail_hash] = await window.taildatabase.getTailReveal(id);
 
             if (tail_hash !== hash) {
                 console.error(`tail_hash !== hash ${tail_hash} !== ${hash}`);
