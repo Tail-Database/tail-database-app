@@ -28,6 +28,11 @@
   color: #282c34;
 }
 
+.search {
+  padding-bottom: 1em;
+  text-align: center;
+}
+
 .menu-container {
   pointer-events: none; 
   width: 100%;

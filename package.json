@@ -17,6 +17,7 @@
     "bootstrap": "^5.2.2",
     "clvm": "^2.0.0",
     "clvm_tools": "^0.9.5",
+    "dexie": "^3.2.2",
     "electron-devtools-installer": "^3.2.0",
     "electron-is-dev": "^2.0.0",
     "electron-reload": "^2.0.0-alpha.1",

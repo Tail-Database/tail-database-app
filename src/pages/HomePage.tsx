@@ -11,6 +11,7 @@ import '../App.css';
 import Layout from '../Layout';
 import { TailRecord } from '../models/tail/record';
 import { InsertResponse } from '../datalayer/rpc/data_layer';
+import { db } from '../taildatabase/db';
 
 declare global {
   interface Window {
@@ -25,13 +26,7 @@ declare global {
   }
 }
 
-type Tail = {
-  hash: string;
-  name: string;
-  code: number;
-};
-
-const columnHelper = createColumnHelper<Tail>();
+const columnHelper = createColumnHelper<TailRecord>();
 
 const columns = [
   columnHelper.accessor('hash', {
@@ -52,25 +47,12 @@ const columns = [
   }),
 ];
 
-const Tails = () => {
-  const [updated, setUpdated] = useState<number | null>(null);
-  const [tails, setTails] = useState([]);
+const Tails = ({ tails, updated }: { tails: TailRecord[]; updated: number | null; }) => {
   const table = useReactTable({
     data: tails,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
-
-  useEffect(() => {
-    (function getTails() {
-      window.taildatabase.getTails()
-        .then((res: any) => setTails(res))
-        .then(() => {
-          setUpdated(Date.now());
-          setTimeout(getTails, 10000);
-        });
-    })();
-  }, []);
 
   return (
     <>
@@ -103,18 +85,80 @@ const Tails = () => {
           ))}
         </tbody>
       </table>
-      {updated && (<>Last updated: <ReactTimeAgo date={updated} locale="en-US" timeStyle={"round"}/></>)}
+      {updated && (<>Last updated: <ReactTimeAgo date={updated} locale="en-US" timeStyle={"round"} /></>)}
     </>
-
   );
 };
 
+const tailsTable = db.table<TailRecord>('tails');
+
 function HomePage() {
+  const [updated, setUpdated] = useState<number | null>(null);
+  const [tails, setTails] = useState<TailRecord[]>([]);
+  const [searchResults, setSearchResults] = useState<TailRecord[]>([]);
+
+  const updateDb = (tailRecords: TailRecord[]) =>
+    tailsTable.clear()
+      .then(() => tailsTable.bulkAdd(tailRecords));
+
+  useEffect(() => {
+    (function getTails() {
+      window.taildatabase.getTails()
+        .then((tailRecords: any) => {
+          setTails(tailRecords);
+
+          return updateDb(tailRecords);
+        })
+        .then(()=> {
+          setUpdated(Date.now());
+          setTimeout(getTails, 10000);
+        });
+    })();
+  }, []);
+
+  const onSearchChange = async(event: React.ChangeEvent<HTMLInputElement>) => {
+    const searchTerm = event.target.value;
+
+    if (searchTerm.length === 64) {
+      const results = await tailsTable
+        .where('hash')
+        .equals(searchTerm)
+        .toArray();
+
+      setSearchResults(results);
+    } else if (searchTerm.length <= 5) {
+      const [codeResults, nameResults] = await Promise.all([
+        tailsTable
+          .where('code')
+          .startsWithIgnoreCase(searchTerm)
+          .toArray(),
+        tailsTable
+          .where('name')
+          .startsWithIgnoreCase(searchTerm)
+          .toArray()
+      ]);
+
+      setSearchResults([...codeResults, ...nameResults]);
+    } else {
+      const results = await tailsTable
+        .where('name')
+        .startsWithIgnoreCase(searchTerm)
+        .toArray();
+
+      setSearchResults(results);
+    }
+  };
+
   return (
     <Layout>
       <div className="row">
+        <div className="col-md-12 search">
+          <div className="form-group">
+            <label htmlFor="search"></label> <input type="text" className="form-control" id="search" name="search" placeholder="Search by name, code, or hash..." onChange={onSearchChange} />
+          </div>
+        </div>
         <div className="col-md-12">
-          <Tails />
+          <Tails tails={searchResults.length > 0 ? searchResults : tails} updated={updated} />
         </div>
       </div>
 
