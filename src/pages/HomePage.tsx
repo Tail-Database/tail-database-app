@@ -13,6 +13,8 @@ import { TailRecord } from '../models/tail/record';
 import { InsertResponse } from '../datalayer/rpc/data_layer';
 import { db } from '../taildatabase/db';
 
+const uniqueTailRecords = (arr: TailRecord[]) => [...new Map(arr.map(item => [item.hash, item])).values()];
+
 declare global {
   interface Window {
     taildatabase: {
@@ -138,7 +140,7 @@ function HomePage() {
           .toArray()
       ]);
 
-      setSearchResults([...codeResults, ...nameResults]);
+      setSearchResults(uniqueTailRecords([...codeResults, ...nameResults]));
     } else {
       const results = await tailsTable
         .where('name')
