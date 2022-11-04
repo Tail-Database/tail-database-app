@@ -5,6 +5,7 @@ import Layout from '../Layout';
 import { convertbits, decode } from '../chia/bech32';
 import { TailRecord } from '../models/tail/record';
 import { CATEGORIES } from '../taildatabase/constants';
+import { db } from '../taildatabase/db';
 
 const customStyles: StylesConfig<React.ChangeEvent<HTMLInputElement>, false, GroupBase<React.ChangeEvent<HTMLInputElement>>> = {
     option: (base, state) => ({
@@ -35,6 +36,8 @@ const categoryOptions = CATEGORIES.map(category => ({
     value: category,
     label: category
 }));
+
+const tailsTable = db.table<TailRecord>('tails');
 
 function AddTail() {
     const [hash, setHash] = useState('');
@@ -111,6 +114,20 @@ function AddTail() {
 
         if (id.length !== 64) {
             console.error('coinId.length !== 64');
+            return;
+        }
+
+        const tails = await tailsTable
+            .where('code')
+            .equalsIgnoreCase(code)
+            .toArray();
+
+        if (tails.length > 0) {
+            console.error('Code already taken');
+
+            setInserted(false);
+            setFailedMessage(`Code already taken: ${code}`);
+
             return;
         }
 
