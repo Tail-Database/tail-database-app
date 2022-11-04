@@ -19,3 +19,4 @@ export const connectionOptions = {
 };
 
 export const store_id = config.network == 'mainnet' ? config.mainnet.store_id  : config.testnet10.store_id;
+export const log_level = process.env.LOG_LEVEL || 'info';

@@ -11,8 +11,9 @@ import { getTailReveal } from './cat';
 import { Blockchain } from '../src/blockchain/rpc/blockchain';
 import { Coin } from '../src/coin/rpc/coin';
 import { synced } from './blockchain';
+import { logger } from './logger';
 
-process.on('uncaughtException', (e) => console.error(e));
+process.on('uncaughtException', (e) => logger.error(e));
 
 const coin = new Coin(connectionOptions);
 const blockchain = new Blockchain(connectionOptions);
@@ -60,13 +61,13 @@ function createWindow() {
     ipcMain.handle('get-tails', () => tailStore.all());
     ipcMain.handle('get-tail', (_, hash) => tailStore.get(hash));
     ipcMain.handle('add-tail', (_, tailRecord: TailRecord) => tailStore.insert(tailRecord));
-    ipcMain.handle('get-nft-uri', async(_, launcher_id: string) => getNftUri(launcher_id, coin));
-    ipcMain.handle('get-tail-reveal', async(_, coin_id: string) => getTailReveal(coin_id, coin));
+    ipcMain.handle('get-nft-uri', async (_, launcher_id: string) => getNftUri(launcher_id, coin));
+    ipcMain.handle('get-tail-reveal', async (_, coin_id: string) => getTailReveal(coin_id, coin));
 
     // DevTools
     installExtension(REACT_DEVELOPER_TOOLS)
-        .then((name) => console.log(`Added Extension:  ${name}`))
-        .catch((err) => console.log('An error occurred: ', err));
+        .then((name) => logger.info(`Added Extension:  ${name}`))
+        .catch((err) => logger.info('An error occurred: ', err));
 
     if (isDev) {
         // win.webContents.openDevTools();
