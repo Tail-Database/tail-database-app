@@ -198,7 +198,7 @@ function AddTail() {
                             <label htmlFor="coin-id">CAT Coin ID</label> <input type="text" className="form-control" id="coin-id" name="coin-id" onChange={onCoinIdChange} />
                         </div>
                         <p><small>Provide the coin id of any coin that is of this CAT. This is used to find the TAIL reveal.</small></p>
-                        <p>{logoUrl && <img src={logoUrl} />}</p>
+                        <p>{logoUrl && <img src={logoUrl} width={250} height={250} />}</p>
                         <input type="submit" value="Add TAIL" />
                     </form>
                 )}
