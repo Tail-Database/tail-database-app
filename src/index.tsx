@@ -12,6 +12,23 @@ import reportWebVitals from './reportWebVitals';
 import HomePage from './pages/HomePage';
 import Tail from './pages/Tail';
 import AddTail from './pages/AddTail';
+import { InsertResponse, RpcResponse } from './datalayer/rpc/data_layer';
+import { TailRecord } from './models/tail/record';
+
+declare global {
+  interface Window {
+    taildatabase: {
+      addTail: (tailRecord: TailRecord) => Promise<InsertResponse>;
+      getTails: () => Promise<TailRecord[]>;
+      getTail: (hash: string) => Promise<TailRecord>;
+      getNftUri: (launcherId: string) => Promise<string>;
+      getTailReveal: (coin_id: string) => Promise<string>;
+      synced: () => Promise<boolean>;
+      subscribe: () => Promise<RpcResponse>;
+    }
+  }
+}
+
 
 TimeAgo.addDefaultLocale(en)
 
@@ -34,6 +51,10 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
+(async() => {
+  window.taildatabase.subscribe().then(() => console.log('Subscribed to data store'));
+})();
 
 root.render(
   <React.StrictMode>

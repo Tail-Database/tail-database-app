@@ -10,23 +10,9 @@ import { Link } from "react-router-dom";
 import '../App.css';
 import Layout from '../Layout';
 import { TailRecord } from '../models/tail/record';
-import { InsertResponse } from '../datalayer/rpc/data_layer';
 import { db } from '../taildatabase/db';
 
 const uniqueTailRecords = (arr: TailRecord[]) => [...new Map(arr.map(item => [item.hash, item])).values()];
-
-declare global {
-  interface Window {
-    taildatabase: {
-      addTail: (tailRecord: TailRecord) => Promise<InsertResponse>;
-      getTails: () => Promise<TailRecord[]>;
-      getTail: (hash: string) => Promise<TailRecord>;
-      getNftUri: (launcherId: string) => Promise<string>;
-      getTailReveal: (coin_id: string) => Promise<string>;
-      synced: () => Promise<boolean>;
-    }
-  }
-}
 
 const columnHelper = createColumnHelper<TailRecord>();
 

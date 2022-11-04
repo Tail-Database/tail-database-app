@@ -1,4 +1,4 @@
-import { DataLayer, InsertResponse, UpdateResponse } from '../../datalayer/rpc/data_layer';
+import { DataLayer, InsertResponse, RpcResponse, UpdateResponse } from '../../datalayer/rpc/data_layer';
 import { Model } from '../../datalayer/model';
 import { TailRecord } from './record';
 import { TailSerializer } from './serializer';
@@ -43,5 +43,9 @@ export class Tail implements Model<TailRecord> {
         const values = (kvs.keys_values || []).map(kv => kv.value.slice(2));
 
         return parseTailRecords([...this.serializer.decode_all(values)]);
+    }
+    
+    public async subscribe(urls: string[] = []): Promise<RpcResponse> {
+        return this.dataLayer.subscribe(urls);
     }
 }

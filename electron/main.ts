@@ -56,7 +56,7 @@ function createWindow() {
         });
     }
 
-
+    ipcMain.handle('subscribe', (_, urls: string[] = []) => tailStore.subscribe(urls));
     ipcMain.handle('synced', () => synced(blockchain));
     ipcMain.handle('get-tails', () => tailStore.all());
     ipcMain.handle('get-tail', (_, hash) => tailStore.get(hash));

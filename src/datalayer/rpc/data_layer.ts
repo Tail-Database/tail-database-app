@@ -4,7 +4,7 @@ import axios from 'axios';
 const DEFAULT_HOSTNAME = 'localhost';
 const DEFAULT_PORT = '8562';
 
-interface RpcResponse {
+export interface RpcResponse {
     success: boolean;
 }
 
@@ -78,6 +78,10 @@ export class DataLayer {
 
     public get_value(key: string): Promise<ValueResponse> {
         return this.request<ValueResponse>('get_value', { id: this.options.id, key });
+    }
+
+    public subscribe(urls: string[] = []): Promise<RpcResponse> {
+        return this.request<RpcResponse>('subscribe', { id: this.options.id, urls });
     }
 
     private async request<T>(route: string, body: Record<string, any>): Promise<T> {
