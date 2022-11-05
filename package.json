@@ -33,7 +33,8 @@
     "toml": "^3.0.0",
     "typescript": "^4.8.4",
     "web-vitals": "^2.1.4",
-    "winston": "^3.8.2"
+    "winston": "^3.8.2",
+    "yarn": "^1.22.19"
   },
   "scripts": {
     "start": "react-scripts start",
