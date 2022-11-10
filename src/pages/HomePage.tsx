@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ReactTimeAgo from 'react-time-ago'
+import { TailRecord } from '@tail-database/tail-database-client';
 import {
   createColumnHelper,
   flexRender,
@@ -9,7 +10,6 @@ import {
 import { Link } from "react-router-dom";
 import '../App.css';
 import Layout from '../Layout';
-import { TailRecord } from '../models/tail/record';
 import { db } from '../taildatabase/db';
 
 const uniqueTailRecords = (arr: TailRecord[]) => [...new Map(arr.map(item => [item.hash, item])).values()];

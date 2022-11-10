@@ -1,5 +1,5 @@
 import { contextBridge, ipcRenderer } from 'electron';
-import { TailRecord } from '../src/models/tail/record';
+import { TailRecord } from '@tail-database/tail-database-client';
 
 contextBridge.exposeInMainWorld('taildatabase', {
     addTail: (tailRecord: TailRecord) => ipcRenderer.invoke('add-tail', tailRecord),

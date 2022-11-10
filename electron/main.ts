@@ -2,11 +2,10 @@ import * as path from 'path';
 import { app, ipcMain, BrowserWindow } from 'electron';
 import * as isDev from 'electron-is-dev';
 import installExtension, { REACT_DEVELOPER_TOOLS } from "electron-devtools-installer";
-import { Coin, DataLayer, Tail, TailRecord } from '@tail-database/tail-database-client';
+import { Blockchain, Coin, DataLayer, Tail, TailRecord } from '@tail-database/tail-database-client';
 import { connectionOptions, store_id } from './config';
 import { getNftUri } from './nft';
 import { getTailReveal } from './cat';
-import { Blockchain } from '../src/blockchain/rpc/blockchain';
 import { synced } from './blockchain';
 import { logger } from './logger';
 
