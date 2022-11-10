@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Select, { GroupBase, StylesConfig } from 'react-select'
+import { TailRecord, CATEGORIES } from '@tail-database/tail-database-client';
 import '../App.css';
 import Layout from '../Layout';
 import { convertbits, decode } from '../chia/bech32';
-import { TailRecord } from '../models/tail/record';
-import { CATEGORIES } from '../taildatabase/constants';
 import { db } from '../taildatabase/db';
 
 const customStyles: StylesConfig<React.ChangeEvent<HTMLInputElement>, false, GroupBase<React.ChangeEvent<HTMLInputElement>>> = {

@@ -1,8 +1,5 @@
 import { SExp } from 'clvm';
-import { Coin } from '../src/coin/rpc/coin';
-import { hex_to_program, uncurry } from './clvm';
-import { coin_name } from './coin_name';
-import { NFT_STATE_LAYER_MOD, SINGLETON_MOD } from './puzzles';
+import { Coin, coin_name, hex_to_program, uncurry, NFT_STATE_LAYER_MOD, SINGLETON_MOD } from '@tail-database/tail-database-client';
 
 export const getNftUri = async (launcher_id: string, coin: Coin): Promise<string | null> => {
     const { coin_records } = await coin.get_coin_records_by_parent_ids([launcher_id]);

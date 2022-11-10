@@ -5,6 +5,7 @@
   "main": "build/electron/main.js",
   "private": true,
   "dependencies": {
+    "@tail-database/tail-database-client": "^1.1.0",
     "@tanstack/react-table": "^8.5.15",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",

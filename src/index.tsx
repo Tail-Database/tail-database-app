@@ -7,13 +7,12 @@ import {
 } from "react-router-dom";
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en.json'
+import { InsertResponse, RpcResponse, TailRecord } from '@tail-database/tail-database-client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import HomePage from './pages/HomePage';
 import Tail from './pages/Tail';
 import AddTail from './pages/AddTail';
-import { InsertResponse, RpcResponse } from './datalayer/rpc/data_layer';
-import { TailRecord } from './models/tail/record';
 
 declare global {
   interface Window {
@@ -28,7 +27,6 @@ declare global {
     }
   }
 }
-
 
 TimeAgo.addDefaultLocale(en)
 

@@ -1,36 +1,6 @@
-import { OPERATOR_LOOKUP, SExp, run_program, CLVMType } from 'clvm';
+import { OPERATOR_LOOKUP, SExp, run_program } from 'clvm';
 import { go, setPrintFunction } from 'clvm_tools';
-import { Coin } from '../src/coin/rpc/coin';
-import { hex_to_program, uncurry } from './clvm';
-import { coin_name } from './coin_name';
-import { CAT2_MOD, SHA256TREE_MOD } from './puzzles';
-
-const COIN_CREATE_CONDITION = 51;
-const MAGIC_SPEND = -113;
-
-const hash_program = (program: CLVMType): string => {
-    const [, result] = run_program(
-        hex_to_program(SHA256TREE_MOD),
-        SExp.to([program]),
-        OPERATOR_LOOKUP,
-    );
-
-    return result.atom.hex();
-};
-
-const match_cat_puzzle = (puzzle: SExp) => {
-    const result = uncurry(puzzle);
-
-    if (!result) {
-        return null;
-    }
-
-    if (result[0] === CAT2_MOD) {
-        return result[1];
-    }
-
-    return null;
-};
+import { Coin, coin_name, hash_program, hex_to_program, match_cat_puzzle, COIN_CREATE_CONDITION, MAGIC_SPEND } from '@tail-database/tail-database-client';
 
 export const getTailReveal = async (coin_id: string, rpc: Coin): Promise<[string, string, string]> => {
     let current_coin = coin_id;
