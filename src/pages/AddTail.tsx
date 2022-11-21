@@ -6,6 +6,16 @@ import Layout from '../Layout';
 import { convertbits, decode } from '../chia/bech32';
 import { db } from '../taildatabase/db';
 
+const isValid = (urlString: string) => {
+    try {
+        const url = new URL(urlString);
+
+        return url.protocol === "http:" || url.protocol === "https:";
+    } catch (_) { }
+
+    return false;
+};
+
 const customStyles: StylesConfig<React.ChangeEvent<HTMLInputElement>, false, GroupBase<React.ChangeEvent<HTMLInputElement>>> = {
     option: (base, state) => ({
         ...base,
@@ -46,6 +56,9 @@ function AddTail() {
     const [category, setCategory] = useState(null);
     const [description, setDescription] = useState('');
     const [coinId, setCoinId] = useState('');
+    const [websiteUrl, setWebsiteUrl] = useState('');
+    const [twitterUrl, setTwitterUrl] = useState('');
+    const [discordUrl, setDiscordUrl] = useState('');
     const [inserted, setInserted] = useState(false);
     const [failedMessage, setFailedMessage] = useState('');
     const [launcherId, setLauncherId] = useState<string | null>(null);
@@ -116,6 +129,21 @@ function AddTail() {
             return;
         }
 
+        if (websiteUrl && !isValid(websiteUrl)) {
+            console.error('!isValid(websiteUrl)');
+            return;
+        }
+
+        if (twitterUrl && !isValid(twitterUrl)) {
+            console.error('!isValid(twitterUrl)');
+            return;
+        }
+
+        if (discordUrl && !isValid(discordUrl)) {
+            console.error('!isValid(discordUrl)');
+            return;
+        }
+
         const tails = await tailsTable
             .where('code')
             .equalsIgnoreCase(code)
@@ -158,7 +186,10 @@ function AddTail() {
                 category: category || '',
                 description,
                 launcherId,
-                eveCoinId
+                eveCoinId,
+                ...(websiteUrl ? { website_url: websiteUrl } : {}),
+                ...(twitterUrl ? { twitter_url: twitterUrl } : {}),
+                ...(discordUrl ? { discord_url: discordUrl } : {}),
             });
 
             if (tx_id) {
@@ -181,6 +212,9 @@ function AddTail() {
     const onLogoNftIdChange = (event: React.ChangeEvent<HTMLInputElement>) => setLogoNftId(event.target.value);
     const onDescriptionChange = (event: React.ChangeEvent<HTMLInputElement>) => setDescription(event.target.value);
     const onCoinIdChange = (event: React.ChangeEvent<HTMLInputElement>) => setCoinId(event.target.value);
+    const onWebsiteUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => setCoinId(event.target.value);
+    const onTwitterUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => setCoinId(event.target.value);
+    const onDiscordUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => setCoinId(event.target.value);
 
     return (
         <Layout>
@@ -212,6 +246,15 @@ function AddTail() {
                         </div>
                         <div className="form-group">
                             <label htmlFor="coin-id">CAT Coin ID</label> <input type="text" className="form-control" id="coin-id" name="coin-id" onChange={onCoinIdChange} />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="coin-id">Website URL</label> <input type="text" className="form-control" id="coin-id" name="coin-id" onChange={onWebsiteUrlChange} />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="coin-id">Twitter URL</label> <input type="text" className="form-control" id="coin-id" name="coin-id" onChange={onTwitterUrlChange} />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="coin-id">Discord URL</label> <input type="text" className="form-control" id="coin-id" name="coin-id" onChange={onDiscordUrlChange} />
                         </div>
                         <p><small>Provide the coin id of any coin that is of this CAT. This is used to find the TAIL reveal.</small></p>
                         <p>{logoUrl && <img src={logoUrl} width={250} height={250} />}</p>
