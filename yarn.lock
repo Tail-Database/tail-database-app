@@ -1982,10 +1982,10 @@
   dependencies:
     defer-to-connect "^1.0.1"
 
-"@tail-database/tail-database-client@1.3.0":
-  version "1.3.0"
-  resolved "https://registry.npmjs.org/@tail-database/tail-database-client/-/tail-database-client-1.3.0.tgz"
-  integrity sha512-TG4sKAoBFyU9qEzmXELzwLEA6dta9U4KKIft0YpamiwwQamC0jNAVZc/vMWzG9+6TqWbQj1EdGu6aKuHSuPBCQ==
+"@tail-database/tail-database-client@1.5.0":
+  version "1.5.0"
+  resolved "https://registry.npmjs.org/@tail-database/tail-database-client/-/tail-database-client-1.5.0.tgz"
+  integrity sha512-82MIB9ktoK6f5WPlISGebtzClnf9Nh0IqyGGVnRznym9qlUWOreZm8bIJBzzEa08y1ycJzvefd8+czK1HSuSjA==
   dependencies:
     "@types/node" "^18.11.9"
     axios "^1.1.3"
