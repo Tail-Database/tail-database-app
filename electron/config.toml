@@ -1,7 +1,7 @@
-network = "testnet10"
+network = "mainnet"
 
 [testnet10]
 store_id = "073edb36a4a982c3d00999b1d925d304e7867afa68eb535e3071ee2f682700ea"
 
 [mainnet]
-store_id = ""
+store_id = "fd1078bf0d01743e8e685b72635ca15488f5adce0da016b229f8885a3de36c0f"
