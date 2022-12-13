@@ -1,10 +1,12 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import Select, { GroupBase, StylesConfig } from 'react-select'
-import { TailRecord, CATEGORIES } from '@tail-database/tail-database-client';
+import { TailRecord, CATEGORIES, InsertResponse } from '@tail-database/tail-database-client';
 import '../App.css';
 import Layout from '../Layout';
 import { convertbits, decode } from '../chia/bech32';
 import { db } from '../taildatabase/db';
+import { ADD_TAIL_URL } from '../config';
 
 const isValid = (urlString: string) => {
     try {
@@ -100,46 +102,64 @@ function AddTail() {
         const id = coinId.slice(0, 2) == '0x' ? coinId.slice(2) : coinId;
 
         if (hash.length !== 64) {
+            setInserted(false);
+            setFailedMessage('Hash is incorrect length (should be 64)');
             console.error('hash.length !== 64');
             return;
         }
 
         if (name.length < 1 || name.length > 100) {
+            setInserted(false);
+            setFailedMessage('Name is too long (max length of 100)');
             console.error('name.length < 1 || name.length > 100');
             return;
         }
 
         if (code.length < 1 || code.length > 5) {
+            setInserted(false);
+            setFailedMessage('Code is incorrect length (max length of 5)');
             console.error('code.length <1 || code.length > 5');
             return;
         }
 
         if (!CATEGORIES.includes(category || '')) {
+            setInserted(false);
+            setFailedMessage(`Category is not one of ${CATEGORIES.join(',')}`);
             console.error('!CATEGORIES.includes(category || \'\')');
             return;
         }
 
         if (!launcherId || launcherId.length !== 64) {
+            setInserted(false);
+            setFailedMessage('Logo NFT ID is invalid');
             console.error('!launcherId || launcherId.length !== 64');
             return;
         }
 
         if (id.length !== 64) {
+            setInserted(false);
+            setFailedMessage('Coin ID is incorrect length (should be 64)');
             console.error('coinId.length !== 64');
             return;
         }
 
         if (websiteUrl && !isValid(websiteUrl)) {
+            setInserted(false);
+            setFailedMessage('Invalid website URL');
             console.error('!isValid(websiteUrl)');
             return;
         }
 
         if (twitterUrl && !isValid(twitterUrl)) {
+            setInserted(false);
+            setFailedMessage('Invalid twitter URL');
             console.error('!isValid(twitterUrl)');
             return;
         }
 
         if (discordUrl && !isValid(discordUrl)) {
+            setInserted(false);
+            setFailedMessage('Invalid discord URL');
             console.error('!isValid(discordUrl)');
             return;
         }
@@ -179,11 +199,11 @@ function AddTail() {
         }
 
         try {
-            const { tx_id } = await window.taildatabase.addTail({
+            const response = await axios.post(ADD_TAIL_URL, {
                 hash,
                 name,
                 code,
-                category: category || '',
+                category,
                 description,
                 launcherId,
                 eveCoinId,
@@ -192,12 +212,18 @@ function AddTail() {
                 ...(discordUrl ? { discord_url: discordUrl } : {}),
             });
 
+            const { tx_id, error } = response.data;
+
             if (tx_id) {
                 setInserted(true);
                 setFailedMessage('');
             } else {
                 setInserted(false);
-                setFailedMessage('Failed to submit TAIL record to mempool. You can only submit the same TAIL hash once. If you recently submitted a record you must wait for it to clear before submitting another.');
+                if (error) {
+                    setFailedMessage(error);
+                } else {
+                    setFailedMessage('Failed to submit TAIL record to mempool. You can only submit the same TAIL hash once. If you recently submitted a record you must wait for it to clear before submitting another.');
+                }
             }
 
             console.log(hash, name, code, tx_id)
@@ -212,9 +238,9 @@ function AddTail() {
     const onLogoNftIdChange = (event: React.ChangeEvent<HTMLInputElement>) => setLogoNftId(event.target.value);
     const onDescriptionChange = (event: React.ChangeEvent<HTMLInputElement>) => setDescription(event.target.value);
     const onCoinIdChange = (event: React.ChangeEvent<HTMLInputElement>) => setCoinId(event.target.value);
-    const onWebsiteUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => setCoinId(event.target.value);
-    const onTwitterUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => setCoinId(event.target.value);
-    const onDiscordUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => setCoinId(event.target.value);
+    const onWebsiteUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => setWebsiteUrl(event.target.value);
+    const onTwitterUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => setTwitterUrl(event.target.value);
+    const onDiscordUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => setDiscordUrl(event.target.value);
 
     return (
         <Layout>
@@ -225,6 +251,9 @@ function AddTail() {
                 )}
                 {!inserted && (
                     <form id="form-add-tail" onSubmit={onSubmit}>
+                        {failedMessage && (
+                            <div className="alert alert-danger" role="alert">{failedMessage}</div>
+                        )}
                         <div className="form-group">
                             <label htmlFor="hash">Hash</label> <input type="text" className="form-control" id="hash" name="hash" onChange={onHashChange} />
                         </div>
@@ -261,10 +290,6 @@ function AddTail() {
                         <input type="submit" value="Add TAIL" />
                     </form>
                 )}
-                {failedMessage && (
-                    <>{failedMessage}</>
-                )}
-
             </div>
         </Layout>
     );
