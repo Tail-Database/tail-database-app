@@ -2,6 +2,14 @@
 
 This is a web3 app which connects to a Tail Database data store in DataLayer running on the Chia blockchain.
 
+## Install
+
+To install the app:
+
+```bash
+npm install
+```
+
 ## How to run
 
 The quickest way to run the app is to execute the following command.
